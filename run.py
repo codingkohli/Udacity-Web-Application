@@ -24,5 +24,20 @@ session.query(MenuItem).all()
 firstResult = session.query(Restaurant).first()
 
 items = session.query(MenuItem).all()
-for item in items:
-    print(item.name)
+"""for item in items:
+    print(item.name)"""
+
+# working on the update command
+veggieBurgers = session.query(MenuItem).filter_by(name = 'Veggie Burger')
+"""for veggieBurger in veggieBurgers:
+    print(veggieBurger.id)
+    print(veggieBurger.name)
+    print(veggieBurger.price)
+    print(veggieBurger.restaurant.name)
+"""
+urbanVeggieBurger = session.query(MenuItem).filter_by(id = 11).one()
+#print(urbanVeggieBurger.name,urbanVeggieBurger.price)
+urbanVeggieBurger.price = "$2.99"
+session.add(urbanVeggieBurger)
+session.commit()
+
