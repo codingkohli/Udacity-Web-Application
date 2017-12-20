@@ -6,7 +6,7 @@ class webserverHandler(BaseHTTPRequestHandler):
         try:
             if self.path.endswith("/hello"):
                 self.send_response(200)
-                self.send_header('Content-type','text/html')
+                self.send_header('Content-type', 'text/html')
                 self.end_headers()
                 output = ""
                 output += "<html><body>Hello!"
@@ -34,19 +34,19 @@ class webserverHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
+            print("Inside Post")
             self.send_response(301)
+            self.send_header('Content-type', 'text/html')
             self.end_headers()
-
-            ctype,pdict = cgi.parse(self.headers.getheader('content-type'))
-            print("Test")
+            print("Checkpoint")
+            ctype,pdict = cgi.parse_header(self.headers.getheader('content-type'))
             if ctype == 'multipart/form-data' :
                 fields = cgi.parse_multipart(self.rfile,pdict)
                 messagecontent = fields.get('message')
-
                 output = ""
                 output += "<html><body>"
                 output += "<h2>How about this one :</h2>"
-                output += "<h1>%s</h1>" %messagecontent[0]
+                output += "<h1>%s</h1>" % messagecontent[0]
                 output += "<form method = 'POST' enctype='multipart/form-data' action='/hello'><h2>Waht would your message be?</h2><input name='message' type='text'><input type='submit' value='Submit'></form>"
                 output += "</body></html>"
 
